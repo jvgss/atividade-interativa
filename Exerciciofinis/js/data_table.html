@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de Dados Filtrável e Ordenável</title>
+    <style>
+        /* Estilos opcionais para a tabela */
+        .hq {
+            background-color: beige;
+            box-sizing: border-box;
+            justify-content: center;
+            display:flex;
+            align-items: center;
+            font-family: Helvetica;
+            color: #333;
+            font-size: 60px;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            width: 300px;
+            height: auto;
+            box-shadow: 10px 10px 10px 10px #333;
+                
+        }
+
+        body {
+            background-image: url(./js/imagens/Tabela\ de\ DadosFiltráveleOrdenável.jpg);
+
+        }
+        
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .navbar a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+
+        table {
+            background-color: beige;
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #ddd;
+            font-family: Arial, sans-serif;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            cursor: pointer;
+            /* Para indicar que os cabeçalhos são clicáveis para ordenação */
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 class="hq">Tabela de Dados</h1>
+    <div class="navbar">
+        <a class="active" href="indexx1.html">To-Do List Interativa</a>
+        <!-- Adicione mais links aqui, se necessário -->
+    </div>
+
+    <input type="text" id="filtroInput" placeholder="Filtrar por...">
+    <table id="tabela">
+        <thead>
+            <tr>
+                <th onclick="ordenarTabela(0)">Nome</th>
+                <th onclick="ordenarTabela(1)">Idade</th>
+                <th onclick="ordenarTabela(2)">País</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaCorpo">
+            <tr>
+                <td>João</td>
+                <td>30</td>
+                <td>Brasil</td>
+            </tr>
+            <tr>
+                <td>Maria</td>
+                <td>25</td>
+                <td>Portugal</td>
+            </tr>
+            <tr>
+                <td>Carlos</td>
+                <td>40</td>
+                <td>Espanha</td>
+            </tr>
+            <tr>
+                <td>Ana</td>
+                <td>28</td>
+                <td>Brasil</td>
+            </tr>
+            <tr>
+                <td>marcos</td>
+                <td>39</td>
+                <td>Brasil</td>
+            </tr>
+            <tr>
+                <td>don </td>
+                <td>45</td>
+                <td>Argentina</td>
+            </tr>
+            <tr>
+                <td>Pedro</td>
+                <td>20</td>
+                <td>Marrocos</td>
+            </tr>
+            <tr>
+                <td>Jonas</td>
+                <td>30</td>
+                <td>Brasil</td>
+            </tr>
+            <tr>
+                <td>igor</td>
+                <td>50</td>
+                <td>chile</td>
+            </tr>
+            <tr>
+                <td>macedo</td>
+                <td>30</td>
+                <td>gana </td>
+            </tr>
+            <tr>
+                <td>João vitor</td>
+                <td>25</td>
+                <td>Brasil</td>
+            </tr>
+            <tr>
+                <td>rogerio</td>
+                <td>23</td>
+                <td>Brasil</td>
+            </tr>
+            <tr>
+                <td>nathan</td>
+                <td>13</td>
+                <td>Brasil</td>
+            </tr>
+            <tr>
+                <td>vitor</td>
+                <td>69</td>
+                <td>Brasil</td>
+            </tr>
+            <tr>
+                <td>kiki</td>
+                <td>11</td>
+                <td>china</td>
+            </tr>
+            <tr>
+                <td>vageta</td>
+                <td>30</td>
+                <td>japão</td>
+            </tr>
+            <tr>
+                <td>goku</td>
+                <td>30</td>
+                <td>japão</td>
+            </tr>
+            <tr>
+                <td>bulma</td>
+                <td>30</td>
+                <td>japão</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <script>
+        // Script JavaScript para filtro e ordenação dinâmica da tabela
+
+        // Referência para a tabela e seu corpo
+        const tabela = document.getElementById('tabela');
+        const corpoTabela = document.getElementById('tabelaCorpo');
+
+        // Função para ordenar a tabela por uma coluna específica
+        function ordenarTabela(coluna) {
+            const linhas = Array.from(corpoTabela.rows);
+
+            // Determina a ordem de classificação (ascendente ou descendente)
+            const ordenarAscendente = (coluna) => (a, b) => a.cells[coluna].textContent > b.cells[coluna].textContent ? 1 : -1;
+            const ordenarDescendente = (coluna) => (a, b) => a.cells[coluna].textContent < b.cells[coluna].textContent ? 1 : -1;
+
+            // Determina a função de ordenação com base na coluna clicada
+            const ordenar = tabela.rows[0].cells[coluna].classList.contains('asc') ? ordenarDescendente(coluna) : ordenarAscendente(coluna);
+
+            // Remove classes de ordenação de todas as colunas
+            tabela.querySelectorAll('th').forEach(th => th.classList.remove('asc', 'desc'));
+            // Aplica a classe de ordenação à coluna clicada
+            tabela.rows[0].cells[coluna].classList.toggle('asc');
+
+            // Ordena as linhas da tabela de acordo com a função de ordenação determinada
+            linhas.sort(ordenar).forEach(linha => corpoTabela.appendChild(linha));
+        }
+
+        // Função para filtrar os dados da tabela
+        document.getElementById('filtroInput').addEventListener('input', function () {
+            const filtro = this.value.toLowerCase();
+            Array.from(corpoTabela.rows).forEach(row => {
+                const conteudoLinhas = row.textContent.toLowerCase();
+                row.style.display = conteudoLinhas.includes(filtro) ? '' : 'none';
+            });
+        });
+    </script>
+
+</body>
+
+</html>

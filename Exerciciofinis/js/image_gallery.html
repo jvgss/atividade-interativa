@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Imagens com Modal</title>
+    <style>
+ 
+
+        h1 {
+            font-family:  Helvetica;
+            font-style: normal;
+            text-align: center;
+            color: white;
+            font-size: 60px;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            width: 300px;
+            height: auto;
+            background-color: #f0f0f0;
+            box-shadow: 10px 10px 10px 10px crimson,
+                -2px -3px 5px inset;
+            background-image: url(https://wallpaperbat.com/img/9763350-jujutsu-kaisen-pc-wallpaper.jpg);
+            background-size: cover;
+
+        }
+
+
+
+        h1:hover,
+        h2:hover,
+        h3:hover {
+            color: #f00;
+            /* Nova cor ao passar o mouse */
+        }
+
+        
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .navbar a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        body {
+            background-image: url(./imagens/9762674-jujutsu-kaisen-4k-wallpaper.jpg);
+            background-size: cover;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .gallery .thumbnails img {
+            width: 150px;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .gallery .thumbnails img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Estilos para o modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            overflow: auto;
+            text-align: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            margin: auto;
+            display: block;
+        }
+
+        .modal .close {
+            color: #ffffff;
+            font-size: 40px;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            cursor: pointer;
+        }
+
+        .modal .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 30px;
+            text-decoration: none;
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .modal .prev {
+            left: 0;
+        }
+
+        .modal .next {
+            right: 0;
+        }
+
+        .modal .nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="gallery">
+       <div><a class="active" href="indexx1.html">To-Do List Interativa</a>
+        <!-- Adicione mais links aqui, se necessário -->
+    </div>
+        <h1>Galeria de fotos Jujutsu kaizen </h1>
+       
+         
+        <div class="thumbnails">
+            
+            <img src="https://wallpaperbat.com/img/5820302-jujutsu-kaisen-anime-computer-wallpaper-jujutsu-hd-wallpaper.jpg"
+                alt="Imagem 1"
+                data-image="https://wallpaperbat.com/img/5820302-jujutsu-kaisen-anime-computer-wallpaper-jujutsu-hd-wallpaper.jpg">
+            <img src="https://wallpaperbat.com/img/9762660-jujutsu-kaisen-wallpaper-desktop-2024.jpg" alt="Imagem 2"
+                data-image="https://wallpaperbat.com/img/9762660-jujutsu-kaisen-wallpaper-desktop-2024.jpg">
+            <img src="https://wallpaperbat.com/img/9762664-epic-fight-scenes-in-jujutsu-kaisen.jpg" alt="Imagem 3"
+                data-image="https://wallpaperbat.com/img/9762664-epic-fight-scenes-in-jujutsu-kaisen.jpg">
+            <img src="https://wallpaperbat.com/img/9762674-jujutsu-kaisen-4k-wallpaper.jpg" alt="Imagem 4"
+                data-image="https://wallpaperbat.com/img/9762674-jujutsu-kaisen-4k-wallpaper.jpg">
+            <img src="https://wallpaperbat.com/img/9762685-anime-pc-jujutsu-kaisen-wallpaper.jpg" alt="Imagem 5"
+                data-image="https://wallpaperbat.com/img/9762685-anime-pc-jujutsu-kaisen-wallpaper.jpg">
+            <img src="https://wallpaperbat.com/img/9762714-jujutsu-kaisen-wallpaper-top-45-best.jpg" alt="Imagem 6"
+                data-image="https://wallpaperbat.com/img/9762714-jujutsu-kaisen-wallpaper-top-45-best.jpg">
+            <img src="https://wallpaperbat.com/img/9762728-satoru-gojo-jujutsu-kaisen-hd-wallpaper.png" alt="Imagem 7"
+                data-image="https://wallpaperbat.com/img/9762728-satoru-gojo-jujutsu-kaisen-hd-wallpaper.png">
+            <img src="https://wallpaperbat.com/img/5820293-jujutsu-kaisen-4k-wallpaper-ultra-4k-jujutsu-kaisen-background-download.jpg"
+                alt="Imagem 8"
+                data-image="https://wallpaperbat.com/img/5820293-jujutsu-kaisen-4k-wallpaper-ultra-4k-jujutsu-kaisen-background-download.jpg">
+            <img src="https://wallpaperbat.com/img/5820253-jujutsu-kaisen-wallpaper-4k.jpg" alt="Imagem 9"
+                data-image="https://wallpaperbat.com/img/5820253-jujutsu-kaisen-wallpaper-4k.jpg">
+            <img src="https://wallpaperbat.com/img/9762734-anime-jujutsu-kaisen-hd-wallpaper-by-.jpg" alt="Imagem 10"
+                data-image="https://wallpaperbat.com/img/9762734-anime-jujutsu-kaisen-hd-wallpaper-by-.jpg">
+            <img src="https://wallpaperbat.com/img/1301448-anime-jujutsu-kaisen-hd-wallpaper.jpg" alt="Imagem 11"
+                data-image="https://wallpaperbat.com/img/1301448-anime-jujutsu-kaisen-hd-wallpaper.jpg">
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modal-image">
+        <a class="nav-btn prev">&#10094;</a>
+        <a class="nav-btn next">&#10095;</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById('modal');
+            const modalImg = document.getElementById('modal-image');
+            const thumbnails = document.querySelectorAll('.thumbnails img');
+            const closeBtn = document.querySelector('.close');
+            const prevBtn = document.querySelector('.prev');
+            const nextBtn = document.querySelector('.next');
+            let currentImageIndex = 0;
+
+            // Abrir o modal e exibir a imagem ampliada ao clicar na miniatura
+            thumbnails.forEach(function (thumbnail, index) {
+                thumbnail.addEventListener('click', function () {
+                    modal.style.display = 'flex'; // Alterado para flex para centralizar verticalmente
+                    modalImg.src = this.getAttribute('data-image');
+                    currentImageIndex = index;
+                });
+            });
+
+            // Fechar o modal ao clicar no botão de fechar
+            closeBtn.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+
+            // Navegar para a imagem anterior
+            prevBtn.addEventListener('click', function () {
+                currentImageIndex = (currentImageIndex - 1 + thumbnails.length) % thumbnails.length;
+                modalImg.src = thumbnails[currentImageIndex].getAttribute('data-image');
+            });
+
+            // Navegar para a próxima imagem
+            nextBtn.addEventListener('click', function () {
+                currentImageIndex = (currentImageIndex + 1) % thumbnails.length;
+                modalImg.src = thumbnails[currentImageIndex].getAttribute('data-image');
+            });
+
+            // Fechar o modal ao clicar fora da imagem ampliada
+            window.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // Teclas de navegação do teclado
+            document.addEventListener('keydown', function (event) {
+                if (modal.style.display === 'flex') {
+                    if (event.key === 'ArrowLeft') {
+                        prevBtn.click();
+                    } else if (event.key === 'ArrowRight') {
+                        nextBtn.click();
+                    } else if (event.key === 'Escape') {
+                        closeBtn.click();
+                    }
+                }
+            });
+        });
+    </script>
+    
+</body>
+
+</html>

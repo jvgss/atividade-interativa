@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Carrinho de Compras</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #333;
+
+    }
+
+    h2 {
+      color: white;
+      text-align: center;
+
+    }
+
+
+    .navbar {
+      background-color: #333;
+      overflow: hidden;
+    }
+
+    .navbar a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .navbar a.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+
+    .product-list,
+    .cart {
+      margin-bottom: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .product,
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .product:last-child,
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .product span,
+    .cart-item span {
+      flex: 1;
+    }
+
+    .product button,
+    .cart-item button {
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .product button:hover,
+    .cart-item button:hover {
+      background-color: #0056b3;
+    }
+
+    .cart-item input {
+      width: 50px;
+      margin-right: 10px;
+      text-align: center;
+    }
+
+    .total {
+      font-weight: bold;
+      margin-top: 20px;
+      text-align: right;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Produtos de Tecnologia</h2>
+  <div class="navbar">
+    <a class="active" href="indexx1.html">To-Do List Interativa</a>
+    <!-- Adicione mais links aqui, se necessário -->
+  </div>
+  <div class="product-list">
+    <div class="product" data-id="1" data-price="2000">
+      <span>Notebook Dell Inspiron</span>
+      <span>R$ 2.000,00</span>
+      <button onclick="addToCart(1, 'Notebook Dell Inspiron', 2000)">Adicionar ao Carrinho</button>
+    </div>
+    <div class="product" data-id="2" data-price="1500">
+      <span>Smartphone Samsung Galaxy</span>
+      <span>R$ 1.500,00</span>
+      <button onclick="addToCart(2, 'Smartphone Samsung Galaxy', 1500)">Adicionar ao Carrinho</button>
+    </div>
+    <div class="product" data-id="3" data-price="300">
+      <span>Fone de Ouvido JBL</span>
+      <span>R$ 300,00</span>
+      <button onclick="addToCart(3, 'Fone de Ouvido JBL', 300)">Adicionar ao Carrinho</button>
+    </div>
+    <div class="product" data-id="4" data-price="800">
+      <span>Tablet Apple iPad</span>
+      <span>R$ 800,00</span>
+      <button onclick="addToCart(4, 'Tablet Apple iPad', 800)">Adicionar ao Carrinho</button>
+    </div>
+    <div class="product" data-id="5" data-price="400">
+      <span>Smartwatch Xiaomi</span>
+      <span>R$ 400,00</span>
+      <button onclick="addToCart(5, 'Smartwatch Xiaomi', 400)">Adicionar ao Carrinho</button>
+    </div>
+  </div>
+
+  <h2>Carrinho de Compras</h2>
+  <div class="cart" id="cart">
+    <!-- Itens do carrinho serão inseridos aqui dinamicamente -->
+  </div>
+  <div class="total" id="total">Total: R$ 0,00</div>
+
+  <script>
+    // Script JavaScript para gerenciar o carrinho de compras
+
+    let cart = [];
+
+    // Função para adicionar um item ao carrinho
+    function addToCart(id, name, price) {
+      const item = cart.find(item => item.id === id);
+      if (item) {
+        item.quantity++;
+      } else {
+        cart.push({ id, name, price, quantity: 1 });
+      }
+      renderCart();
+    }
+
+    // Função para atualizar a quantidade de um item no carrinho
+    function updateQuantity(id, quantity) {
+      const item = cart.find(item => item.id === id);
+      if (item) {
+        item.quantity = parseInt(quantity);
+        if (item.quantity <= 0) {
+          removeFromCart(id);
+        } else {
+          renderCart();
+        }
+      }
+    }
+
+    // Função para remover um item do carrinho
+    function removeFromCart(id) {
+      cart = cart.filter(item => item.id !== id);
+      renderCart();
+    }
+
+    // Função para calcular o total do carrinho
+    function calculateTotal() {
+      return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    }
+
+    // Função para renderizar o carrinho no DOM
+    function renderCart() {
+      const cartContainer = document.getElementById('cart');
+      cartContainer.innerHTML = '';
+      cart.forEach(item => {
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+      <span>${item.name}</span>
+      <span>R$ ${item.price.toFixed(2)}</span>
+      <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
+      <button onclick="removeFromCart(${item.id})">Remover</button>
+    `;
+        cartContainer.appendChild(cartItem);
+      });
+      document.getElementById('total').innerText = `Total: R$ ${calculateTotal()}`;
+    }
+
+  </script>
+
+</body>
+
+</html>
